@@ -1,16 +1,9 @@
 [
-  {
-      "id": 1,
-      "nome": "João Silva",
-      "cargo": "Gerente",
-      "salario": 4500.0,
-      "status": true
-  },
-  {
-      "id": 2,
-      "nome": "Maria Souza",
-      "cargo": "Assistente",
-      "salario": 2500.0,
-      "status": false
-  }
+    {
+        "id": 1,
+        "nome": "João Silva",
+        "cargo": "Gerente",
+        "salario": 4500.0,
+        "status": true
+    }
 ]

@@ -38,10 +38,41 @@ def listar_funcionario():
                 print("Status: ativo")
             else:
                 print("Status: inativo")
-        
-
-    
-
     else:
         print("Sem funcionários cadastrados")
+
+def atualizar_funcionarios(id, nome, cargo, salario, status):
+    funcionarios = carregar_funcionarios()
+
+    for funcionario in funcionarios:
+         
+        if funcionario['id'] == id :
+            funcionario['nome'] = nome
+            funcionario['cargo'] = cargo
+            funcionario['salario'] = salario
+            funcionario['status'] = status
+
+            print(f"{nome} alterado com sucesso!")
+            break
+    
+    with open(funcionarios_json, 'w') as f:
+        json.dump(funcionarios, f, indent=4, ensure_ascii=False)
+    
+    
+
+def deletar_usuario(id):
+    funcionarios = carregar_funcionarios()
+
+    for funcionario in funcionarios:  
+        if funcionario['id'] == id:
+            funcionarios.remove(funcionario)
+            print(f"{funcionario['nome']} excluido com sucesso!")
+            break
+
+    with open(funcionarios_json, 'w') as f:
+        json.dump(funcionarios, f, indent=4, ensure_ascii=False)
+
+
+
+
 
