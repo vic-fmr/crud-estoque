@@ -1,9 +1,0 @@
-[
-    {
-        "id": 1,
-        "nome": "João Silva",
-        "cargo": "Gerente",
-        "salario": 4500.0,
-        "status": true
-    }
-]
