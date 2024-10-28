@@ -48,6 +48,8 @@ def listar_funcionarios():
                 print("Status: Inativo")
     else:
         print("Sem funcionários cadastrados")
+
+    
         
 def listar_funcionarios_com_id():
     funcionarios = carregar_funcionarios()

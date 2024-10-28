@@ -1,12 +1,5 @@
 [
     {
-        "id": 1,
-        "nome": "Victor",
-        "cargo": "Chefe",
-        "salario": 4000.0,
-        "status": true
-    },
-    {
         "id": 3,
         "nome": "Willyane",
         "cargo": "Engenheira",
@@ -39,6 +32,13 @@
         "nome": "Hugo",
         "cargo": "Desenvolvedor Front End",
         "salario": 3400.0,
+        "status": true
+    },
+    {
+        "id": 8,
+        "nome": "René",
+        "cargo": "chefao ultra master",
+        "salario": 30000000000.0,
         "status": true
     }
 ]
