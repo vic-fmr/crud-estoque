@@ -1,7 +1,11 @@
 import json
 import os
+from time import sleep
 
 funcionarios_json = os.path.join(os.path.dirname(__file__), 'funcionarios.json')
+
+def limpar_terminal():
+        os.system('cls')
 
 def carregar_funcionarios():
     if not os.path.exists(funcionarios_json):
@@ -19,29 +23,29 @@ def adicionar_funcionario(nome, cargo, salario, status):
         id = 1
     else:
         for funcionario in funcionarios:
-            if funcionario:
-                id = funcionario['id'] + 1
+            id = funcionario['id'] + 1
     
 
     funcionarios.append({'id': id, 'nome': nome, 'cargo' : cargo, 'salario' : salario, 'status' : status})
 
     with open(funcionarios_json, 'w') as f:
         json.dump(funcionarios, f, indent=4, ensure_ascii=False)
-    print(f"{nome} adicionado com sucesso!")
+    print(f"\n{nome} adicionado com sucesso!")
     
 def listar_funcionarios():
     funcionarios = carregar_funcionarios()
 
+    print("\n |-----------| Lista de funcionários |-----------|")
     if(funcionarios):
         for funcionario in funcionarios:
             print(f"\nNome: {funcionario['nome']}")
             print(f"Cargo: {funcionario['cargo']}")
-            print(f"Salário: {funcionario['salario']}")
+            print(f"Salário: R${funcionario['salario']}")
             
             if funcionario['status'] == True:
-                print("Status: ativo")
+                print("Status: Ativo")
             else:
-                print("Status: inativo")
+                print("Status: Inativo")
     else:
         print("Sem funcionários cadastrados")
         
@@ -50,10 +54,10 @@ def listar_funcionarios_com_id():
 
     if(funcionarios):
         for funcionario in funcionarios:
-            print(f"id: {funcionario['id']}")
+            print(f"\nid: {funcionario['id']}")
             print(f"Nome: {funcionario['nome']}")
             print(f"Cargo: {funcionario['cargo']}")
-            print(f"Salário: {funcionario['salario']}")
+            print(f"Salário: R${funcionario['salario']}")
             
             if funcionario['status'] == True:
                 print("Status: ativo")
@@ -61,19 +65,23 @@ def listar_funcionarios_com_id():
                 print("Status: inativo")
     else:
         print("Sem funcionários cadastrados")
+        
+    
 
 def atualizar_funcionario():
     funcionarios = carregar_funcionarios()
     listar_funcionarios_com_id()
         
     id = int(input("\nInsira o id correspondente ao funcionário a ser editado: "))
+    
+    limpar_terminal()
         
     for funcionario in funcionarios:
         if funcionario['id'] == id:
-            print(f"Dados atuais: ")
+            print(f"\nDados atuais: ")
             print(f"Nome: {funcionario['nome']}")
             print(f"Cargo: {funcionario['cargo']}")
-            print(f"Salário: {funcionario['salario']}")
+            print(f"Salário: R${funcionario['salario']}")
             
             if funcionario['status'] == True:
                 print("Status: Ativo")
@@ -96,7 +104,7 @@ def atualizar_funcionario():
     with open(funcionarios_json, 'w') as f:
         json.dump(funcionarios, f, indent=4, ensure_ascii=False)
     
-    print(f"Novos dados: ")
+    print(f"\nNovos dados: ")
     listar_funcionarios()
     
 
@@ -106,18 +114,18 @@ def deletar_funcionario(id):
     for funcionario in funcionarios:  
         if funcionario['id'] == id:
             funcionarios.remove(funcionario)
-            print(f"{funcionario['nome']} excluido com sucesso!")
+            print(f"\n{funcionario['nome']} excluido com sucesso!")
             break
 
     with open(funcionarios_json, 'w') as f:
         json.dump(funcionarios, f, indent=4, ensure_ascii=False)
 
 def menu():
-    print("\n------------Gestão de Funcionários------------")
+    print("\n |------------------------| Gestão de Funcionários |------------------------|")
     print("\n1- Cadastrar funcionário.")
-    print("\n2- Listar funcionários.")
-    print("\n3- Atualizar dados de um funcionário.")
-    print("\n4- Deletar funcionário.")
+    print("2- Listar funcionários.")
+    print("3- Atualizar dados de um funcionário.")
+    print("4- Deletar funcionário.")
     print("\n5- Encerrar programa.")
     return int(input("\nInsira o código da sua atividade:"))
 
