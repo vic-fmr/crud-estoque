@@ -1,44 +1,9 @@
 [
     {
-        "id": 3,
-        "nome": "Willyane",
-        "cargo": "Engenheira",
-        "salario": 4000.0,
-        "status": true
-    },
-    {
-        "id": 4,
+        "id": 1,
         "nome": "Victor",
-        "cargo": "Desenvolvedor",
-        "salario": 40000.0,
-        "status": true
-    },
-    {
-        "id": 5,
-        "nome": "Lucas",
-        "cargo": "Analista QA",
-        "salario": 1200.0,
-        "status": true
-    },
-    {
-        "id": 6,
-        "nome": "Jayme",
-        "cargo": "Engenheiro de Dadps",
-        "salario": 2000.0,
-        "status": true
-    },
-    {
-        "id": 7,
-        "nome": "Hugo",
-        "cargo": "Desenvolvedor Front End",
-        "salario": 3400.0,
-        "status": true
-    },
-    {
-        "id": 8,
-        "nome": "René",
-        "cargo": "chefao ultra master",
-        "salario": 30000000000.0,
+        "cargo": "Desenvolvedor Full Stack",
+        "salario": "2400",
         "status": true
     }
 ]

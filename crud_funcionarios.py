@@ -116,11 +116,12 @@ def deletar_funcionario(id):
     for funcionario in funcionarios:  
         if funcionario['id'] == id:
             funcionarios.remove(funcionario)
-            print(f"\n{funcionario['nome']} excluido com sucesso!")
             break
 
     with open(funcionarios_json, 'w') as f:
         json.dump(funcionarios, f, indent=4, ensure_ascii=False)
+    
+deletar_funcionario("6")
 
 def menu():
     print("\n |------------------------| Gestão de Funcionários |------------------------|")
