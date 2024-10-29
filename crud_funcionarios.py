@@ -121,7 +121,7 @@ def deletar_funcionario(id):
     with open(funcionarios_json, 'w') as f:
         json.dump(funcionarios, f, indent=4, ensure_ascii=False)
     
-deletar_funcionario("6")
+
 
 def menu():
     print("\n |------------------------| Gestão de Funcionários |------------------------|")

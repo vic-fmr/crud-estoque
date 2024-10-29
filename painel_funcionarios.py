@@ -12,7 +12,7 @@ while True:
             salario = float(input("\nInsira o salario do funcionário novo: R$"))
             
             while salario < 400: #Validação do salário inserido
-                salario = float(input("Por favor, insira pelo menos R$ 400,00"))
+                salario = float(input("Por favor, insira pelo menos R$ 400,00: R$"))
                 
             status = True
             adicionar_funcionario(nome, cargo, salario, status)
