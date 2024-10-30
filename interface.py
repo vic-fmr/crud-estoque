@@ -9,13 +9,14 @@ def limpar_campos_entrada():
     entrada_nome.delete(0, tkinter.END)
     entrada_cargo.delete(0, tkinter.END)
     entrada_salario.delete(0, tkinter.END)
+    entrada_setor.delete(0, tkinter.END)
 
 def capturar_campos_entrada():
     nome = entrada_nome.get()
     cargo = entrada_cargo.get()
     salario = float(entrada_salario.get())
-    
-    return nome, cargo, salario
+    setor = entrada_setor.get()    
+    return nome, cargo, salario, setor
 
 def atualizar_JSON(funcionarios):
     with open(funcionarios_json, 'w') as f:
@@ -31,14 +32,24 @@ def listar_funcionarios_na_interface():
     for cabecalho in colunas:
         lista_funcionarios.heading(cabecalho, text=cabecalho)
         
-        if cabecalho == "Id":
-            lista_funcionarios.column(cabecalho, anchor="center", width=30)
-        else:
-            lista_funcionarios.column(cabecalho, anchor="center")
+        match(cabecalho):
+            case "Id":
+                lista_funcionarios.column(cabecalho, anchor="center", width=30)
+            case "Nome":
+                lista_funcionarios.column(cabecalho, anchor="center", width=250)
+            case "Salário":
+                lista_funcionarios.column(cabecalho, anchor="center", width=50)
+            case "Cargo":
+                lista_funcionarios.column(cabecalho, anchor="center", width=250)
+            case "Setor":
+                lista_funcionarios.column(cabecalho, anchor="center", width=100)
+            case _:
+                lista_funcionarios.column(cabecalho, anchor="center", width=50)
+
+                
+
     
     for dado_funcionario in funcionarios_formatado:
-
-        dado_funcionario[4] = "Ativo" if dado_funcionario[4] else "Inativo"
         
         dado_funcionario.append("Editar")
         dado_funcionario.append("Deletar")
@@ -48,7 +59,7 @@ def listar_funcionarios_na_interface():
 def adicionar_funcionario_na_lista():
     funcionarios = carregar_funcionarios()
     
-    nome, cargo, salario = capturar_campos_entrada()
+    nome, cargo, salario, setor = capturar_campos_entrada()
 
     # Garantir que seja cadastrado com um 'id' maior que o ultimo id cadastrado
     if funcionarios == []:
@@ -58,7 +69,7 @@ def adicionar_funcionario_na_lista():
             id = funcionario['id'] + 1
     
 
-    funcionarios.append({'id': id, 'nome': nome, 'cargo' : cargo, 'salario' : salario, 'status' : True})
+    funcionarios.append({'id': id, 'nome': nome, 'cargo' : cargo, 'salario' : salario, 'setor' : setor})
 
     atualizar_JSON(funcionarios)
     
@@ -78,12 +89,13 @@ def editar_funcionario(event):
         entrada_nome.insert(0, values[1])
         entrada_cargo.insert(0, values[2])
         entrada_salario.insert(0, values[3])
+        entrada_setor.insert(0, values[4])
         
         capturar_botao.config(command=lambda: atualizar_funcionario_interface(int(values[0])), text="Atualizar Cadastro")
         
 
     elif col == "#7":  # Coluna "Delete"
-        confirm = messagebox.askyesno("Confirmar", f"Tem certeza de que deseja {values[1]}?")
+        confirm = messagebox.askyesno("Confirmar", f"Tem certeza de que deseja deletar {values[1]}?")
         
         if confirm:
             deletar_funcionario(int(values[0]))
@@ -92,7 +104,7 @@ def editar_funcionario(event):
 def atualizar_funcionario_interface(id):
     funcionarios = carregar_funcionarios()
     
-    nome, cargo, salario = capturar_campos_entrada()
+    nome, cargo, salario, setor = capturar_campos_entrada()
     
     for funcionario in funcionarios:
         if funcionario['id'] == id:
@@ -100,6 +112,7 @@ def atualizar_funcionario_interface(id):
             funcionario['nome'] = nome
             funcionario['cargo'] = cargo
             funcionario['salario'] = salario
+            funcionario['setor'] = setor
             
     atualizar_JSON(funcionarios)
         
@@ -112,15 +125,16 @@ def atualizar_funcionario_interface(id):
 #Aqui começa a interface:
 root = tkinter.Tk()
 sv_ttk.set_theme("dark")
+root.geometry("1280x720")
 
 
 root.title("Gerenciar Funcionário")
 
 frame_lista_funcionarios = ttk.Frame(root)
-frame_lista_funcionarios.grid(row=0, column=1, pady=10)
+frame_lista_funcionarios.pack(side="right", fill=tkinter.BOTH, pady=20)
 
 frame_entrada_dados = ttk.LabelFrame(root, text="Cadastro e Atualização de Funcionários")
-frame_entrada_dados.grid(row=0, column=0, padx= 5)
+frame_entrada_dados.pack(fill="x", pady=20, padx=20)
 
 
 label_nome = ttk.Label(frame_entrada_dados, text="Nome do Funcionário")
@@ -138,6 +152,12 @@ entrada_salario = ttk.Entry(frame_entrada_dados)
 label_salario.pack(pady=(20,0))
 entrada_salario.pack(pady=(0, 20))
 
+label_setor = ttk.Label(frame_entrada_dados, text="Setor")
+entrada_setor = ttk.Entry(frame_entrada_dados)
+label_setor.pack()
+entrada_setor.pack(pady=(0, 20))
+
+
 capturar_botao = ttk.Button(frame_entrada_dados, text="Cadastrar Funcionário", command=adicionar_funcionario_na_lista, style="Accent.TButton", width=20)
 capturar_botao.pack(pady=10)
 
@@ -147,9 +167,9 @@ lista_funcionarios_scroll = ttk.Scrollbar(frame_lista_funcionarios)
 lista_funcionarios_scroll.pack(side="right", fill="y")
 
 
-colunas = ("Id", "Nome", "Cargo", "Salário", "Status", "====================" , "======================")
+colunas = ("Id", "Nome", "Cargo", "Salário", "Setor", "====================" , "======================")
 lista_funcionarios = ttk.Treeview(frame_lista_funcionarios, show="headings", yscrollcommand=lista_funcionarios_scroll.set, columns=colunas)
-lista_funcionarios.pack()
+lista_funcionarios.pack(fill=tkinter.BOTH, expand=True)
 
 
 lista_funcionarios_scroll.config(command=lista_funcionarios.yview)
