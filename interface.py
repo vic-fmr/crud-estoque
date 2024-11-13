@@ -61,7 +61,6 @@ def adicionar_funcionario_na_lista():
     
     nome, cargo, salario, setor = capturar_campos_entrada()
 
-    # Garantir que seja cadastrado com um 'id' maior que o ultimo id cadastrado
     if funcionarios == []:
         id = 1
     else:
@@ -77,7 +76,6 @@ def adicionar_funcionario_na_lista():
     limpar_campos_entrada()
 
 
-# Função para manipular ações na coluna de botões
 def editar_funcionario(event):
     item_id = lista_funcionarios.identify_row(event.y)
     col = lista_funcionarios.identify_column(event.x)
@@ -100,6 +98,31 @@ def editar_funcionario(event):
         if confirm:
             deletar_funcionario(int(values[0]))
             listar_funcionarios_na_interface()
+
+def buscar_funcionario_na_interface():
+    id = int(entrada_id_busca.get())
+    
+    
+    funcionarios = carregar_funcionarios()
+    
+    for funcionario in funcionarios:
+        if funcionario['id'] == id:
+            lista_funcionarios.delete(*lista_funcionarios.get_children())
+
+            dados_funcionario = []
+            for dado_funcionario in funcionario:
+                dados_funcionario.append(funcionario[dado_funcionario])
+                
+            dados_funcionario.append("Editar")
+            dados_funcionario.append("Deletar")
+        
+            
+            lista_funcionarios.insert('', tkinter.END, values=dados_funcionario)
+            return
+        
+        
+            
+            
 
 def atualizar_funcionario_interface(id):
     funcionarios = carregar_funcionarios()
@@ -133,7 +156,7 @@ root.title("Gerenciar Funcionário")
 frame_lista_funcionarios = ttk.Frame(root)
 frame_lista_funcionarios.pack(side="right", fill=tkinter.BOTH, pady=20)
 
-frame_entrada_dados = ttk.LabelFrame(root, text="Cadastro e Atualização de Funcionários")
+frame_entrada_dados = ttk.LabelFrame(root, text="Gerenciamento de Funcionários")
 frame_entrada_dados.pack(fill="x", pady=20, padx=20)
 
 
@@ -161,6 +184,13 @@ entrada_setor.pack(pady=(0, 20))
 capturar_botao = ttk.Button(frame_entrada_dados, text="Cadastrar Funcionário", command=adicionar_funcionario_na_lista, style="Accent.TButton", width=20)
 capturar_botao.pack(pady=10)
 
+label_buscar_funcionario = ttk.Label(frame_entrada_dados, text="Buscar funcionário por id")
+entrada_id_busca = ttk.Entry(frame_entrada_dados, width=5)
+label_buscar_funcionario.pack(pady=(40,0))
+entrada_id_busca.pack(pady=(0,10))
+
+capturar_botao_busca = ttk.Button(frame_entrada_dados, text="Buscar Funcionário", command=buscar_funcionario_na_interface, style="Accent.TButton",width=20)
+capturar_botao_busca.pack(pady=(10,10))
 
 
 lista_funcionarios_scroll = ttk.Scrollbar(frame_lista_funcionarios)
